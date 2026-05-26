@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GRYK — Tu frozen yogurt te está esperando</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #0d5fe6;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bg-letter {
+      position: fixed;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 280px;
+      color: rgba(255,255,255,0.05);
+      line-height: 1;
+      user-select: none;
+      pointer-events: none;
+    }
+    .l1 { top: -60px; left: -30px; }
+    .l2 { top: -40px; right: 40px; transform: rotate(8deg); }
+    .l3 { bottom: -80px; left: 30px; transform: rotate(-5deg); }
+    .l4 { bottom: -70px; right: -20px; transform: rotate(12deg); }
+
+    .card {
+      background: #f4ecbe;
+      border-radius: 28px;
+      width: 100%;
+      max-width: 460px;
+      position: relative;
+      z-index: 2;
+      overflow: hidden;
+      box-shadow: 0 32px 80px rgba(4,53,132,0.35);
+    }
+
+    .card-top {
+      background: #043584;
+      padding: 2rem 2rem 1.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ct-letter {
+      position: absolute;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      color: rgba(255,255,255,0.06);
+      font-size: 140px;
+      line-height: 1;
+      user-select: none;
+      pointer-events: none;
+    }
+    .ctl1 { top: -20px; right: -10px; }
+    .ctl2 { bottom: -35px; left: 15px; }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo-icon {
+      width: 40px; height: 40px;
+      background: #0d5fe6;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .logo-text {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      color: #fff;
+      letter-spacing: 0.04em;
+    }
+    .logo-sub {
+      font-size: 9px; font-weight: 500;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      display: block;
+      margin-top: -3px;
+    }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #0d5fe6; color: #f4ecbe;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 100px;
+      margin-bottom: 1rem;
+      position: relative; z-index: 1;
+    }
+    .badge-dot {
+      width: 6px; height: 6px;
+      background: #f4ecbe; border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50% { opacity:0.5; transform:scale(0.7); }
+    }
+
+    .headline {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 40px;
+      line-height: 1.05;
+      color: #fff;
+      position: relative; z-index: 1;
+      margin-bottom: 0.6rem;
+    }
+    .headline em { font-style: normal; color: #f4ecbe; }
+
+    .subhead {
+      font-size: 14px; font-weight: 400;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.55;
+      position: relative; z-index: 1;
+    }
+
+    .steps {
+      display: flex;
+      margin-top: 1.5rem;
+      position: relative; z-index: 1;
+    }
+    .step {
+      flex: 1;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 5px;
+      position: relative;
+    }
+    .step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 14px; left: 60%;
+      width: 80%; height: 1px;
+      background: rgba(255,255,255,0.15);
+    }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 600; color: #f4ecbe;
+    }
+    .step-label {
+      font-size: 10px;
+      color: rgba(255,255,255,0.45);
+      text-align: center; font-weight: 500;
+    }
+
+    .card-body { padding: 1.75rem 2rem 2rem; }
+
+    .field { margin-bottom: 1rem; }
+    .field-label {
+      display: block;
+      font-size: 11px; font-weight: 600; color: #043584;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+    .field-input {
+      width: 100%;
+      background: #fff;
+      border: 1.5px solid rgba(13,95,230,0.2);
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+      font-size: 15px;
+      font-family: 'DM Sans', sans-serif;
+      color: #043584;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+    }
+    .field-input:focus {
+      border-color: #0d5fe6;
+      box-shadow: 0 0 0 3px rgba(13,95,230,0.12);
+    }
+    .field-input::placeholder { color: #8fc2ef; }
+    .field-input:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .btn {
+      width: 100%;
+      background: #0d5fe6; color: #fff;
+      border: none; border-radius: 12px;
+      padding: 1rem;
+      font-size: 15px; font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      margin-top: 0.25rem;
+      display: flex; align-items: center;
+      justify-content: center; gap: 8px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn:hover:not(:disabled) { background: #043584; }
+    .btn:active:not(:disabled) { transform: scale(0.98); }
+    .btn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+    .btn-arrow {
+      width: 22px; height: 22px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+
+    .error-msg {
+      background: #fee2e2; color: #b91c1c;
+      border-radius: 10px;
+      padding: 0.65rem 1rem;
+      font-size: 13px;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    .invalid-msg {
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    .invalid-msg h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px; font-weight: 800;
+      color: #043584; margin-bottom: 0.5rem;
+    }
+    .invalid-msg p { font-size: 14px; color: #8b634b; line-height: 1.6; }
+
+    .fine-print {
+      font-size: 11px; color: #8b634b;
+      text-align: center;
+      margin-top: 1rem; line-height: 1.5;
+    }
+
+    .success { display: none; text-align: center; padding: 2rem 1rem; }
+    .success-ring {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: #0d5fe6;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.25rem;
+    }
+    .success-ring svg { width: 32px; height: 32px; }
+    .success h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 24px; font-weight: 800;
+      color: #043584; margin-bottom: 0.5rem;
+    }
+    .success p { font-size: 14px; color: #8b634b; line-height: 1.6; }
+
+    @media (max-width: 480px) {
+      .headline { font-size: 32px; }
+      body { padding: 1.5rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-letter l1" aria-hidden="true">G</div>
+  <div class="bg-letter l2" aria-hidden="true">K</div>
+  <div class="bg-letter l3" aria-hidden="true">R</div>
+  <div class="bg-letter l4" aria-hidden="true">Y</div>
+
+  <div class="card">
+    <div class="card-top">
+      <div class="ct-letter ctl1" aria-hidden="true">Y</div>
+      <div class="ct-letter ctl2" aria-hidden="true">K</div>
+
+      <div class="logo-area">
+        <div class="logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M6 20 C6 20 6 10 12 10 C18 10 18 20 18 20" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+            <rect x="10" y="14" width="4" height="5" rx="1" fill="white"/>
+          </svg>
+        </div>
+        <div>
+          <span class="logo-text">GRYK</span>
+          <span class="logo-sub">Frozen Yogurt</span>
+        </div>
+      </div>
+
+      <div class="badge">
+        <span class="badge-dot"></span>
+        Invitación exclusiva
+      </div>
+
+      <h1 class="headline">Tu <em>gryk</em><br>te está<br>esperando 🍦</h1>
+      <p class="subhead">Creá tu cuenta, obtené tu regalo<br>y venís a disfrutarlo cuando quieras.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-label">Registrate</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-label">Recibís tu QR</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-label">Disfrutás</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+
+      <!-- Estado: token inválido o ya usado -->
+      <div class="invalid-msg" id="invalid-section" style="display:none;">
+        <h3>Este link no es válido</h3>
+        <p>La invitación ya fue utilizada o no existe.<br>Si creés que es un error, contactanos.</p>
+      </div>
+
+      <!-- Formulario -->
+      <div id="form-section" style="display:none;">
+        <div class="field">
+          <label class="field-label" for="nombre">Nombre y apellido</label>
+          <input class="field-input" id="nombre" type="text" placeholder="Ej: María González" autocomplete="name" />
+        </div>
+        <div class="field">
+          <label class="field-label" for="email">Email</label>
+          <input class="field-input" id="email" type="email" placeholder="tu@email.com" autocomplete="email" />
+        </div>
+
+        <button class="btn" id="submit-btn" onclick="handleSubmit()">
+          <span id="btn-text">Crear mi cuenta</span>
+          <span class="btn-arrow" id="btn-arrow">→</span>
+        </button>
+
+        <div class="error-msg" id="error-msg"></div>
+        <p class="fine-print">Invitación personal e intransferible. Una vez registrado recibís tu QR por email.</p>
+      </div>
+
+      <!-- Éxito -->
+      <div class="success" id="success-section">
+        <div class="success-ring">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#f4ecbe" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <h3>¡Bienvenido/a al club!</h3>
+        <p>Tu cuenta fue creada. En breve recibís un email con tu código QR y tu saldo de regalo.<br>¡Nos vemos pronto!</p>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://twcaikuzztbofsrttlru.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3Y2Fpa3V6enRib2ZzcnR0bHJ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk4MTQ3NDgsImV4cCI6MjA5NTM5MDc0OH0.6hIFfOOEW54CMUwFCKTf4yUMw7Tq0uXVdz_zb5AUeww';
+
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+
+    async function init() {
+      if (!token) {
+        document.getElementById('invalid-section').style.display = 'block';
+        return;
+      }
+
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/invitaciones?token=eq.${token}&select=id,usado`, {
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+      });
+
+      const data = await res.json();
+
+      if (!data.length || data[0].usado) {
+        document.getElementById('invalid-section').style.display = 'block';
+      } else {
+        document.getElementById('form-section').style.display = 'block';
+      }
+    }
+
+    async function handleSubmit() {
+      const nombre = document.getElementById('nombre').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const errorEl = document.getElementById('error-msg');
+      const btn = document.getElementById('submit-btn');
+      const btnText = document.getElementById('btn-text');
+      const btnArrow = document.getElementById('btn-arrow');
+
+      errorEl.style.display = 'none';
+
+      if (!nombre || !email) { showError('Por favor completá todos los campos.'); return; }
+      if (!email.includes('@') || !email.includes('.')) { showError('Por favor ingresá un email válido.'); return; }
+
+      btn.disabled = true;
+      btnText.textContent = 'Guardando...';
+      btnArrow.textContent = '⏳';
+
+      try {
+        // 1. Insertar en influencers
+        const resInsert = await fetch(`${SUPABASE_URL}/rest/v1/influencers`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({ nombre, email, estado: 'pendiente' })
+        });
+
+        if (!resInsert.ok) throw new Error('Error al guardar el registro');
+
+        // 2. Marcar token como usado
+        await fetch(`${SUPABASE_URL}/rest/v1/invitaciones?token=eq.${token}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({ usado: true, usado_at: new Date().toISOString() })
+        });
+
+        document.getElementById('form-section').style.display = 'none';
+        document.getElementById('success-section').style.display = 'block';
+
+      } catch (err) {
+        btn.disabled = false;
+        btnText.textContent = 'Crear mi cuenta';
+        btnArrow.textContent = '→';
+        showError('Hubo un problema al registrarte. Intentá de nuevo.');
+      }
+    }
+
+    function showError(msg) {
+      const el = document.getElementById('error-msg');
+      el.textContent = msg;
+      el.style.display = 'block';
+    }
+
+    init();
+  </script>
+</body>
+</html>
